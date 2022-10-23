@@ -1,0 +1,148 @@
+% !TEX encoding = UTF-8 Unicode
+% !TeX spellcheck = en_GB 
+% !TEX TS-program = pdflatex
+
+ \documentclass[%
+    formato=a4paper,
+    corpo=11pt,
+    twoside,
+    stile=standard,
+    tipotesi=magistrale,
+    evenboxes,
+    english
+]{toptesi}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % o altro font
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage[
+    left = \flqq{},
+    right = \frqq{},
+    leftsub = \flq{},
+    rightsub = \frq{}
+]{dirtytalk}
+
+\hypersetup{
+    pdfpagemode={UseOutlines},
+    bookmarksopen,
+    pdfstartview={FitH},
+    colorlinks,
+    linkcolor={blue},
+    citecolor={blue},
+    urlcolor={blue}
+ }
+
+\lstset{language=C,
+  basicstyle=\linespread{1.0}\ttfamily,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  showspaces=false,
+  backgroundcolor = \color{gray!10},
+  showstringspaces=false,
+  commentstyle=\color{black!50!green}\ttfamily,
+  morecomment=[l][\color{magenta}]{\#},
+  numbers=none,                    
+  % numbersep=2pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  % xleftmargin=.05\textwidth,
+  frame=lines
+}
+
+\usepackage[backend=bibtex, maxbibnames=99]{biblatex}
+\usepackage{csquotes}
+\usepackage{multirow}
+
+\usepackage{color}
+\definecolor{ChapBlue}{RGB}{0,0,175}
+
+\graphicspath{ {./images/} }
+\addbibresource{mybib.bib}
+\renewcommand{\mkbegdispquote}[2]{\itshape}
+
+%%%%%%% Definizioni locali
+\ExtendCaptions{english}{Abstract}{Acknowledgements}
+\raggedbottom
+
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
+
+\begin{document}
+\english
+\errorcontextlines=9 % used to define number of lines to describe an error %
+
+\begin{titlepage}
+\centerline{
+\includegraphics[width=6cm]{politologonuovo.jpeg}} 
+\vspace{1cm}
+\centerline{\huge POLITECNICO DI TORINO}
+\vspace{0.5cm}
+\centerline{\Large DEPARTMENT OF CONTROL AND COMPUTER ENGINEERING (DAUIN)}
+\vspace{1.5cm}
+\centerline{\Large Master Degree in Computer Engineering}
+\vspace{1cm}
+\centerline{\LARGE Master Degree Thesis}
+\vspace{1.5cm}
+\centerline{\huge\textsc{\bfseries MC2101: A RISC-V-based Microcontroller}}
+\vspace{0.3cm}
+\centerline{\huge\textsc{\bfseries for Security Assessment and Training}}
+\vspace{1.5cm}
+\centerline{\Large Author: Luca \textsc{Dalmasso}}
+\vspace{1.1cm}
+\centerline{\Large Advisor: Paolo Ernesto \textsc{Prinetto}}
+\vspace{0.3cm}
+\centerline{\Large Co-Advisor: Gianluca \textsc{Roascio}}
+\vspace{1cm}
+\centerline{\LARGE October, 2022}
+\end{titlepage}
+
+%\summary
+\section*{Summary}
+Today, as the Internet Of Things (IoT) world keeps growing, billions of microcontrollers are used as edge devices in a very wide range of applications, from industrial automation to health care dimension.
+Such massive diffusion of embedded devices in safety-critical and business-critical missions brings up important consequences in terms of security due to hardware and software vulnerabilities of such devices.
+
+In literature, many security solutions for microcontrollers have been proposed, relying on both hardware and software techniques.
+While software-based solutions can be easily evaluated with a proper software toolchain suited for the target ISA, hardware solutions are more critical as they require an open architecture that can be easily customized starting from the core itself. The aforementioned requirements lead to choose an ISA that is well documented and allows to be extended and modified. For all these reasons, the most suitable architecture is the open-source RISC-V platform, widely used by the embedded systems research community. Other benefit of choosing RISC-V is to have a small and simple standard ISA that is adequate not only for testing new security solutions, but also for security training activities for students and professionals, e.g., through artificial insertion of vulnerabilities and exercises on exploits and remediations. 
+
+The aim of my thesis project is to design and implement MC2101, a soft microcontroller similar to PULPino, compatible with the RISC-V ISA and synthesizable on FPGA with the purpose of being a starting point to be extended, modified and used to perform security tests in a realistic environment. Starting from a custom 32-bit RISC-V processor named AFTAB, the goal was to design in VHDL a minimal set of peripherals that, together with the core and a proper bus architecture, are able to provide all the necessary I/O functionalities for running test software on a real board. In particular, the peripherals introduced are a 32-bit GPIO module that is used to handle both incoming and outgoing digital signals, and a UART peripheral containing a subset of the UART 16550 specifications selected for our needs. The UART peripheral plays a very important role, allowing a serial communication between MC2101 and a PC. This is a crucial feature to interact with the board through standard input and output interfaces.
+
+To verify the correctness of the architecture, MC2101 has been synthesized and tested with custom Assembly and C applications with the aim of testing the correct behaviour of all interconnected peripherals, as well as the software libraries necessary for driving them. In conclusion, the synthesis results on FPGA have been compared with PULPino microcontroller to see what are the differences in terms of resources utilization.
+
+
+\figurespagetrue
+\tablespagetrue
+\indici
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    
+% Chapters: Intro, Background, Related work, Contribution, Results, Conclusions
+%
+\input{chapters/introduction.tex}
+\input{chapters/background.tex}
+%\input{chapters/related_work.tex}
+\input{chapters/contribution.tex}
+\input{chapters/experimental_results.tex}
+\input{chapters/conclusions.tex}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    
+% HERE IS WHERE YOU INCLUDE YOUR APPENDICES (IF ANY)
+%
+\appendix
+%\input{appendices/appendix.tex}
+% and so on
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\printbibliography
+
+\end{document}
